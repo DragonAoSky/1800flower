@@ -22,16 +22,16 @@ public class TallyController {
     public String GetPost(){
         String url = "http://jsonplaceholder.typicode.com/posts";
         try {
-            Post[] temp = rt.getForObject(url, Post[].class);
+            Post[] temp = rt.getForObject(url, Post[].class); // get the JSON response in Post format
             String text = "There are " + TallyUniqID(temp) + " unique user Ids";
-            return "[{\"message\": \"" + text + "\"}]";
+            return "[{\"message\": \"" + text + "\"}]"; // return result as json format
         }catch (Exception e) {
             return "Error!";
         }
     }
 
 
-    public int TallyUniqID(Post[] posts){
+    public int TallyUniqID(Post[] posts){ // count uniq IDs
         Set<Integer> set = new HashSet<>();
         for(Post p: posts){
             if(!set.contains(p.getUserId())){

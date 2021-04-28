@@ -28,8 +28,8 @@ public class UpdateController {
     public String GetPost(){
         try {
             String url = "http://jsonplaceholder.typicode.com/posts";
-            String temp = rt.getForObject(url, String.class);
-            JSONArray jsonArray = JSONArray.parseArray(temp);
+            String temp = rt.getForObject(url, String.class); // get the JSON response
+            JSONArray jsonArray = JSONArray.parseArray(temp); // parse the response to JSONArray
             return UpdateId(jsonArray);
         }
         catch (Exception e) {
@@ -37,7 +37,7 @@ public class UpdateController {
         }
     }
 
-    public String UpdateId(JSONArray posts){
+    public String UpdateId(JSONArray posts){ // update 4th element of the JSONArray
         if(posts.size() < 4)
             return posts.toString();
         else{
