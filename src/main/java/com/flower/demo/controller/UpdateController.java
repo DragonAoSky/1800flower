@@ -21,10 +21,15 @@ public class UpdateController {
         this.rt = restTemplateBuilder.build();
     }
 
-    //@RequestMapping(value = "/updates",produces = MediaType.APPLICATION_JSON_VALUE)
-    //@RequestMapping(value = "/updates")
-    @RequestMapping(value = "/updates",produces= "application/json")
-    public String GetPost(){
+    @RequestMapping(value = "/test")
+        public String test(){
+            return "YES";
+        }
+
+        //@RequestMapping(value = "/updates",produces = MediaType.APPLICATION_JSON_VALUE)
+        //@RequestMapping(value = "/updates")
+        @RequestMapping(value = "/updates",produces= "application/json")
+        public String GetPost(){
         try {
             String url = "http://jsonplaceholder.typicode.com/posts";
             String temp = rt.getForObject(url, String.class);
