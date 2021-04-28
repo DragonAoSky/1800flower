@@ -1,8 +1,11 @@
 package com.flower.demo.controller;
 
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
+//import org.json.JSONArray;
+//import org.json.JSONException;
+//import org.json.JSONObject;
+import com.alibaba.fastjson.JSONArray;
+import com.alibaba.fastjson.JSONObject;
+import com.alibaba.fastjson.serializer.SerializerFeature;
 import org.springframework.boot.web.client.RestTemplateBuilder;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
@@ -33,7 +36,7 @@ public class UpdateController {
         try {
             String url = "http://jsonplaceholder.typicode.com/posts";
             String temp = rt.getForObject(url, String.class);
-            JSONArray jsonArray = new JSONArray(temp);
+            JSONArray jsonArray = JSONArray.parseArray(temp);
             return UpdateId(jsonArray);
         }
         catch (HttpStatusCodeException e) {
@@ -43,16 +46,27 @@ public class UpdateController {
         }
     }
 
-    public String UpdateId(JSONArray posts) throws JSONException {
-        if(posts.length() < 4)
+    public String UpdateId(JSONArray posts){
+        if(posts.size() < 4)
             return posts.toString();
         else{
             JSONObject temp = posts.getJSONObject(3);
             temp.put("title","1800Flowers");
             temp.put("body","1800Flowers");
-            return posts.toString();
+            return posts.toString(SerializerFeature.PrettyFormat, SerializerFeature.WriteMapNullValue,
+                    SerializerFeature.WriteDateUseDateFormat);
         }
-
-
     }
+
+
+//    public String UpdateId(JSONArray posts) throws JSONException {
+//        if(posts.length() < 4)
+//            return posts.toString();
+//        else{
+//            JSONObject temp = posts.getJSONObject(3);
+//            temp.put("title","1800Flowers");
+//            temp.put("body","1800Flowers");
+//            return posts.toString();
+//        }
+//    }
 }
