@@ -2,9 +2,13 @@ package com.flower.demo.controller;
 
 import com.flower.demo.Post;
 import java.util.*;
+
+import org.json.JSONObject;
 import org.springframework.boot.web.client.RestTemplateBuilder;
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.client.HttpStatusCodeException;
 import org.springframework.web.client.RestTemplate;
 
 
@@ -19,11 +23,19 @@ public class TallyController {
         this.rt = restTemplateBuilder.build();
     }
 
-    @RequestMapping("/tallies")
+    @RequestMapping(value = "/tallies",produces= "application/json")
     public String GetPost(){
         String url = "http://jsonplaceholder.typicode.com/posts";
-        Post[] temp = rt.getForObject(url, Post[].class);
-        return "There are " + TallyUniqID(temp) + " unique user Ids";
+        try {
+            Post[] temp = rt.getForObject(url, Post[].class);
+            String text = "There are " + TallyUniqID(temp) + " unique user Ids";
+            return "[{\"message\": \"" + text + "\"}]";
+        }
+        catch (HttpStatusCodeException e) {
+            return "Error!";
+        }catch (Exception e) {
+            return "Error!";
+        }
     }
 
 
